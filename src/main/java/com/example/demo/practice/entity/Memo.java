@@ -14,7 +14,6 @@ import lombok.ToString;
 @Entity
 @Getter
 @ToString
-@Data
 @NoArgsConstructor
 public class Memo {
 
@@ -30,7 +29,12 @@ public class Memo {
 		this.id = id;
 		this.text = text;
 	}
-
+	 
+	 
+	public Memo toEntity() {
+		Memo build = Memo.builder().id(id).text(text).build();
+		return build;
+	}
 	
 
 }

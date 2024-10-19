@@ -4,11 +4,14 @@ import com.example.demo.practice.entity.Memo;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class MemoDto {
 	
