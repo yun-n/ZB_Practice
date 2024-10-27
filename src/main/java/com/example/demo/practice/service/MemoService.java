@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.example.demo.practice.entity.Memo;
 import com.example.demo.practice.model.MemoDto;
 import com.example.demo.practice.repository.MemoRepository;
-import com.example.demo.practice.service.MemoService_remove;
 
 import lombok.RequiredArgsConstructor;
 

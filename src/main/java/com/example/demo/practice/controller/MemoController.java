@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.practice.model.MemoDto;
-import com.example.demo.practice.service.MemoService_remove;
 
 import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
