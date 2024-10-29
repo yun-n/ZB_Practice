@@ -24,43 +24,43 @@ import lombok.ToString;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 public class Board {
-	
+
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // 기본적인 키생성을 데이터베이스에게 맡김
 	@Id
 	private int boardNo;
-	
+
 	private String boardTitle;
 
 	private String boardContent;
-	
+
 	private String boardWriter;
-	
+
 	private String boardPassword;
-	
+
 	@CreatedDate
-	private LocalDateTime  createDate;
-	
+	private LocalDateTime createDate;
+
 	@LastModifiedDate
-	private LocalDateTime  updateDate;
+	private LocalDateTime updateDate;
 
 	@Builder
 	public Board(BoardRequestDto requestDto) {
-	    this.boardTitle = requestDto.getBoardTitle();
-	    this.boardContent = requestDto.getBoardContent();
-	    this.boardWriter = requestDto.getBoardWriter();
-	    this.boardPassword = requestDto.getBoardPassword();
+		this.boardTitle = requestDto.getBoardTitle();
+		this.boardContent = requestDto.getBoardContent();
+		this.boardWriter = requestDto.getBoardWriter();
+		this.boardPassword = requestDto.getBoardPassword();
 	}
 
 	public void update(BoardRequestDto requestDto) {
 		this.boardTitle = requestDto.getBoardTitle();
-		this.boardContent =  requestDto.getBoardContent();
-		
+		this.boardContent = requestDto.getBoardContent();
+
 	}
-	
-	 public static Board of(BoardRequestDto requestDto) {
-	        return Board.builder()
-	                .requestDto(requestDto)
-	                .build();
-	    }
+
+	public static Board of(BoardRequestDto requestDto) {
+		return Board.builder()
+				.requestDto(requestDto)
+				.build();
+	}
 
 }
