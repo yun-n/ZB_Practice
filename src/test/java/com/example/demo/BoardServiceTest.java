@@ -5,10 +5,11 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.board.dto.BoardRequestDto;
@@ -29,8 +30,8 @@ public class BoardServiceTest {
 	}
 
 	@Test
-	void getBoardList() {
-		List<BoardResponseDto> list = boardRepository.findAllByOrderByCreateDateDesc().stream()
+	void getBoardList(Pageable pageable) {
+		List<BoardResponseDto> list = boardRepository.findAllByOrderByCreateDateDesc(pageable).stream()
 				.map(BoardResponseDto::new).toList();
 		int cnt = 7;
 		Assertions.assertEquals(cnt, list.size());

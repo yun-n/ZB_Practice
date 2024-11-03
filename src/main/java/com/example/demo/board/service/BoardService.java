@@ -2,6 +2,7 @@ package com.example.demo.board.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +21,8 @@ public class BoardService {
 	private final BoardRepository boardRepository;
 
 	@Transactional
-	public List<BoardResponseDto> getBoardList() {
-		return boardRepository.findAllByOrderByCreateDateDesc()
+	public List<BoardResponseDto> getBoardList(Pageable pageable) {
+		return boardRepository.findAllByOrderByCreateDateDesc(pageable)
 				.stream()
 				.map(BoardResponseDto::new)
 				.toList();

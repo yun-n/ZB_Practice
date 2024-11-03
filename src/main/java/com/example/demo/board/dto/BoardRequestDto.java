@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 public class BoardRequestDto {
-	
+
 	private String boardTitle;
     private String boardContent;
     private String boardWriter;

@@ -2,6 +2,8 @@ package com.example.demo.board.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +26,8 @@ public class BoardController {
 	private final BoardService boardService;
 	
 	@GetMapping("/api/board/list")
-	public List<BoardResponseDto> getBoardList(){
-		return boardService.getBoardList();
+	public List<BoardResponseDto> getBoardList(@PageableDefault(page = 0, size = 3) Pageable pageable){
+		return boardService.getBoardList(pageable);
 	}
 	
 	@PostMapping("/api/board/register")
