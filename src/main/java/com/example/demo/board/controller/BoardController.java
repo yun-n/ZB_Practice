@@ -2,6 +2,7 @@ package com.example.demo.board.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +27,7 @@ public class BoardController {
 	private final BoardService boardService;
 	
 	@GetMapping("/api/board/list")
-	public List<BoardResponseDto> getBoardList(@PageableDefault(page = 0, size = 3) Pageable pageable){
+	public Page<BoardResponseDto> getBoardList(@PageableDefault(page = 0, size = 3) Pageable pageable){
 		return boardService.getBoardList(pageable);
 	}
 	

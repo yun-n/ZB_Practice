@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter 
+@Getter
 @NoArgsConstructor
 public class BoardResponseDto {
 
@@ -20,6 +20,16 @@ public class BoardResponseDto {
 	private LocalDateTime updateDate;
 
 	@Builder
+	public BoardResponseDto(int boardNo, String boardTitle, String boardContent, String boardWriter,
+			LocalDateTime createDate, LocalDateTime updateDate) {
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.boardWriter = boardWriter;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
+	}
+
 	public BoardResponseDto(Board entity) {
 		this.boardNo = entity.getBoardNo();
 		this.boardTitle = entity.getBoardTitle();

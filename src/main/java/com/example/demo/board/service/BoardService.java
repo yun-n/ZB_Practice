@@ -2,6 +2,7 @@ package com.example.demo.board.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +22,17 @@ public class BoardService {
 	private final BoardRepository boardRepository;
 
 	@Transactional
-	public List<BoardResponseDto> getBoardList(Pageable pageable) {
-		return boardRepository.findAllByOrderByCreateDateDesc(pageable)
-				.stream()
-				.map(BoardResponseDto::new)
-				.toList();
+	public Page<BoardResponseDto> getBoardList(Pageable pageable) {
+		Page<BoardResponseDto> bordPageList = boardRepository.findAllByOrderByCreateDateDesc(pageable)
+															.map(board -> BoardResponseDto.builder()
+																		.boardNo(board.getBoardNo())
+																		.boardTitle(board.getBoardTitle())
+																		.boardContent(board.getBoardContent())
+																		.boardWriter(board.getBoardWriter())
+																		.createDate(board.getCreateDate())
+																		.createDate(board.getUpdateDate())
+																		.build());
+		return bordPageList;	
 	}
 
 	public BoardResponseDto boardRegister(BoardRequestDto requestDto) {
@@ -35,8 +42,7 @@ public class BoardService {
 
 	@Transactional
 	public BoardResponseDto getBoard(int boardNo) {
-		return boardRepository.findById(boardNo)
-				.map(BoardResponseDto::new)
+		return boardRepository.findById(boardNo).map(BoardResponseDto::new)
 				.orElseThrow(() -> new IllegalArgumentException("글번호가 존재하지 않습니다."));
 	}
 

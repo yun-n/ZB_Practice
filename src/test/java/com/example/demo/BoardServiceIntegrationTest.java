@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Assertions;
 
 @SpringBootTest
 @Transactional
-@TestPropertySource(properties = {"spring.config.location = classpath:application-test.properties"})
+//@TestPropertySource(properties = {"spring.config.location = classpath:application-test.properties"})
 public class BoardServiceIntegrationTest {
 
 	@Autowired
@@ -42,11 +42,11 @@ public class BoardServiceIntegrationTest {
 		reqDto.setBoardPassword("test");
 		reqDto.setBoardWriter("test");
 		BoardResponseDto boardResDto  = boardService.boardRegister(reqDto);
-		List<Board> board = boardRepository.findAll();
+		Page<Board> board = boardRepository.findAll(pageable);
 		
-		List<BoardResponseDto> boardList = boardService.getBoardList(pageable);
+		Page<BoardResponseDto> boardList = boardService.getBoardList(pageable);
 		
-		Assertions.assertEquals(board.size(),boardList.size());
+		Assertions.assertEquals(board.getTotalElements(),boardList.getTotalElements());
 	}
 	
 	@Test 
