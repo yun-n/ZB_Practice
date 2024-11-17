@@ -21,27 +21,27 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentController {
 
-	private final CommentService commnetService;
+	private final CommentService commentService;
 	
 	@GetMapping("/api/board/{boardNo}/comment")
-	public List<Comment> getcommentList(@PathVariable int boardNo){
-		return commnetService.getCommentList(boardNo);
+	public List<Comment> getCommentList(@PathVariable int boardNo){
+		return commentService.getCommentList(boardNo);
 	}
 	
 	@PostMapping("/api/board/{boardNo}/comment")
 	public Comment commentRegister(@PathVariable int boardNo, @RequestBody CommentRequest request) {
-		Comment saveComment = commnetService.commentRegister(boardNo, request);
+		Comment saveComment = commentService.commentRegister(boardNo, request);
 		return  saveComment;
 	}
 	
 	@PutMapping("/api/board/{boardNo}/comment/{commentNo}")
 	public Comment updateComment(@PathVariable int boardNo, @PathVariable int commentNo, @RequestBody CommentRequest request) {
-		return commnetService.updateComment(boardNo, commentNo, request);	
+		return commentService.updateComment(boardNo, commentNo, request);	
 	}
 	
 	@DeleteMapping("/api/board/{boardNo}/comment/{commentNo}")
 	public ResponseDto deleteComment(@PathVariable int boardNo, @PathVariable int commentNo) {
-		return commnetService.deleteComment(boardNo, commentNo);		
+		return commentService.deleteComment(boardNo, commentNo);		
 	}
 
 }

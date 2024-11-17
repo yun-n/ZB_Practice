@@ -38,5 +38,16 @@ public class BoardResponseDto {
 		this.createDate = entity.getCreateDate();
 		this.updateDate = entity.getUpdateDate();
 	}
+	
+	public static BoardResponseDto of(Board board) {
+		return BoardResponseDto.builder()
+                .boardNo(board.getBoardNo())
+                .boardTitle(board.getBoardTitle())
+                .boardContent(board.getBoardContent())
+                .boardWriter(board.getBoardWriter())
+                .createDate(board.getCreateDate())
+                .updateDate(board.getUpdateDate())
+                .build();
+    }
 
 }

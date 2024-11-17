@@ -5,9 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.data.domain.Pageable;
 import com.example.demo.board.dto.BoardRequestDto;
 import com.example.demo.board.dto.BoardResponseDto;
 import com.example.demo.board.dto.ResponseDto;
@@ -16,8 +13,6 @@ import com.example.demo.board.repository.BoardRepository;
 import com.example.demo.board.service.BoardService;
 
 import jakarta.transaction.Transactional;
-
-import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 

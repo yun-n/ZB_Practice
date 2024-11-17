@@ -1,7 +1,5 @@
 package com.example.demo.board.service;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,14 +22,7 @@ public class BoardService {
 	@Transactional
 	public Page<BoardResponseDto> getBoardList(Pageable pageable) {
 		Page<BoardResponseDto> bordPageList = boardRepository.findAllByOrderByCreateDateDesc(pageable)
-															.map(board -> BoardResponseDto.builder()
-																		.boardNo(board.getBoardNo())
-																		.boardTitle(board.getBoardTitle())
-																		.boardContent(board.getBoardContent())
-																		.boardWriter(board.getBoardWriter())
-																		.createDate(board.getCreateDate())
-																		.createDate(board.getUpdateDate())
-																		.build());
+															.map(BoardResponseDto::of);
 		return bordPageList;	
 	}
 

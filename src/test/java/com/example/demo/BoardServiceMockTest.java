@@ -1,8 +1,5 @@
 package com.example.demo;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -49,12 +46,13 @@ public class BoardServiceMockTest {
 		reqDto.setBoardWriter("test");
 
 		board = Board.of(reqDto);
-
-		Mockito.when(boardRepository.save(Mockito.any(Board.class))).thenReturn(board);
+//		Mockito.when(boardRepository.save(Mockito.any(Board.class))).thenReturn(board);
 	}
 
 	@Test
 	void getBoardList() {
+		Mockito.when(boardRepository.save(Mockito.any(Board.class))).thenReturn(board);
+		
 		PageRequest pageable = PageRequest.of(0, 3);
 
 		Page<Board> mockPage = new PageImpl<>(List.of(board), pageable, 1);
@@ -68,6 +66,8 @@ public class BoardServiceMockTest {
 
 	@Test
 	void getBoard() {
+		Mockito.when(boardRepository.save(Mockito.any(Board.class))).thenReturn(board);
+		
 		BoardResponseDto boardResDto = boardService.boardRegister(reqDto);
 
 		Mockito.when(boardRepository.findById(boardResDto.getBoardNo())).thenReturn(java.util.Optional.of(board));
@@ -79,6 +79,8 @@ public class BoardServiceMockTest {
 
 	@Test
 	void updateBoard() throws Exception {
+		Mockito.when(boardRepository.save(Mockito.any(Board.class))).thenReturn(board);
+		
 		BoardResponseDto boardResDto = boardService.boardRegister(reqDto);
 		Mockito.when(boardRepository.findById(boardResDto.getBoardNo())).thenReturn(java.util.Optional.of(board));
 
@@ -92,6 +94,8 @@ public class BoardServiceMockTest {
 
 	@Test
 	void boardRegister() {
+		Mockito.when(boardRepository.save(Mockito.any(Board.class))).thenReturn(board);
+		
 		BoardResponseDto boardResDto = boardService.boardRegister(reqDto);
 		Mockito.when(boardRepository.findById(boardResDto.getBoardNo())).thenReturn(java.util.Optional.of(board));
 
@@ -102,12 +106,72 @@ public class BoardServiceMockTest {
 
 	@Test
 	void deleteBoard() throws Exception {
+		Mockito.when(boardRepository.save(Mockito.any(Board.class))).thenReturn(board);
+		
 		BoardResponseDto boardResDto = boardService.boardRegister(reqDto);
 		Mockito.when(boardRepository.findById(boardResDto.getBoardNo())).thenReturn(java.util.Optional.of(board));
 		
 		ResponseDto resDto = boardService.deleteBoard(boardResDto.getBoardNo(), reqDto);
 
 		Assertions.assertEquals(resDto.isSuccess(), true);
+	}
+	
+	@Test
+	void getBoardNotFoundException() {
+		int invalidBoardNo = 999;
+		Mockito.when(boardRepository.findById(invalidBoardNo)).thenReturn(java.util.Optional.empty());
+		
+		Exception e = Assertions.assertThrows(IllegalArgumentException.class, () -> boardService.getBoard(invalidBoardNo));
+		
+		Assertions.assertEquals("글번호가 존재하지 않습니다.", e.getMessage());
+	}
+	
+	@Test
+	void updateBoardPasswordMismatchException() throws Exception {
+		Mockito.when(boardRepository.save(Mockito.any(Board.class))).thenReturn(board);
+		
+	    BoardResponseDto boardResDto = boardService.boardRegister(reqDto);
+	    Mockito.when(boardRepository.findById(boardResDto.getBoardNo())).thenReturn(java.util.Optional.of(board));
+
+	    reqDto.setBoardPassword("wrong-password");
+
+	    Exception exception = Assertions.assertThrows(Exception.class, 
+	        () -> boardService.updateBoard(boardResDto.getBoardNo(), reqDto));
+	    Assertions.assertEquals("비밀번호가 일치하지 않습니다.", exception.getMessage());
+	}
+
+	@Test
+	void updateBoardNotFoundException() {
+	    int invalidBoardNo = 999;
+	    Mockito.when(boardRepository.findById(invalidBoardNo)).thenReturn(java.util.Optional.empty());
+
+	    Exception exception = Assertions.assertThrows(IllegalArgumentException.class, 
+	        () -> boardService.updateBoard(invalidBoardNo, reqDto));
+	    Assertions.assertEquals("글번호가 존재하지 않습니다.", exception.getMessage());
+	}
+	
+	@Test
+	void deleteBoardPasswordMismatchException() {
+		Mockito.when(boardRepository.save(Mockito.any(Board.class))).thenReturn(board);
+		
+	    BoardResponseDto boardResDto = boardService.boardRegister(reqDto);
+	    Mockito.when(boardRepository.findById(boardResDto.getBoardNo())).thenReturn(java.util.Optional.of(board));
+
+	    reqDto.setBoardPassword("wrong-password");
+
+	    Exception exception = Assertions.assertThrows(Exception.class, 
+	        () -> boardService.deleteBoard(boardResDto.getBoardNo(), reqDto));
+	    Assertions.assertEquals("비밀번호가 일치하지 않습니다.", exception.getMessage());
+	}
+
+	@Test
+	void deleteBoardNotFoundException() {
+	    int invalidBoardNo = 999;
+	    Mockito.when(boardRepository.findById(invalidBoardNo)).thenReturn(java.util.Optional.empty());
+
+	    Exception exception = Assertions.assertThrows(IllegalArgumentException.class, 
+	        () -> boardService.deleteBoard(invalidBoardNo, reqDto));
+	    Assertions.assertEquals("글 번호가 존재하지 않습니다.", exception.getMessage());
 	}
 
 }
